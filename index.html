@@ -21,13 +21,13 @@
     }
     
     .container {
-        display: flex;
+        display: none; /* Hidden until password is entered */
         justify-content: center;
         align-items: center;
         flex-direction: column;
         width: 350px;
         gap: 30px;
-        padding-top: 20px; /* Add some top padding */
+        padding-top: 20px;
     }
     
     .message-box {
@@ -40,12 +40,12 @@
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         text-align: center;
     }
-    .me{
+    .me {
         align-self: flex-end;
         animation: slideLeft 0.5s ease-in-out var(--d) forwards;
     }
     
-    .triangle{
+    .triangle {
         width: 0;
         height: 0;
         border-right: 20px solid transparent;
@@ -66,18 +66,18 @@
             opacity: 1;
         }
     }
-    @keyframes slideLeft{
-        0%{
+    @keyframes slideLeft {
+        0% {
             transform: translateX(100%);
         }
-        100%{
+        100% {
             transform: translateX(0);
             opacity: 1;
         }
     }
 
     .btn-primary {
-        display: none; /* Initially hide the button */
+        display: none;
         position: relative;
         padding : 10px 20px;
         background: #1f8aff;
@@ -96,56 +96,96 @@
         height: 100%;
         clip-path: polygon(25% 0% 100% 0%, 75% 100% , 0% 100%);
     }
-    .btn-primary:hover .shape{
+    .btn-primary:hover .shape {
         transform: translateX();
         transition: transform 0.8s;
     }
-    .btn-primary:hover{
+    .btn-primary:hover {
         background: #ff00ff;
         scale: 1.05s;
         transform: all 0.5s;
     }
+
+    .password-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .password-input {
+        padding: 10px;
+        font-size: 1rem;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
+    .password-button {
+        padding: 10px 20px;
+        background: #1f8aff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1rem;
+    }
 </style>
-    <div class="container">
-        <div class="message-box me" style="--d: 0s">
-            Hi Juju!
-            <div class="triangle right"></div>
-        </div>
-        <div class="message-box me" style="--d: 2s">
-            How do you do today?
-            <div class="triangle right"></div>
-        </div>
-        <div class="message-box me" style="--d: 4s">
-            I hope that you're good.
-            <div class="triangle right"></div>
-        </div>
-        <div class="message-box me" style="--d: 6s">
-            I just wanna say that you matter more than you think.
-            <div class="triangle right"></div>
-        </div>
-        <div class="message-box me" style="--d: 8s">
-            I see something special from you.
-            <div class="triangle right"></div>
-        </div>
-        <div class="message-box me" style="--d: 10s">
-            You need to be know more about yourself ju.
-            <div class="triangle right"></div>
-        </div>
-        <a href="msg1" target="_blank">
+
+<div class="password-container">
+    <input type="password" id="passwordInput" class="password-input" placeholder="Enter password">
+    <button onclick="checkPassword()" class="password-button">Submit</button>
+</div>
+
+<div class="container" id="messageContainer">
+    <div class="message-box me" style="--d: 0s">
+        Hi Juju!
+        <div class="triangle right"></div>
+    </div>
+    <div class="message-box me" style="--d: 2s">
+        How do you do today?
+        <div class="triangle right"></div>
+    </div>
+    <div class="message-box me" style="--d: 4s">
+        I hope that you're good.
+        <div class="triangle right"></div>
+    </div>
+    <div class="message-box me" style="--d: 6s">
+        I just wanna say that you matter more than you think.
+        <div class="triangle right"></div>
+    </div>
+    <div class="message-box me" style="--d: 8s">
+        I see something special from you.
+        <div class="triangle right"></div>
+    </div>
+    <div class="message-box me" style="--d: 10s">
+        You need to be know more about yourself ju.
+        <div class="triangle right"></div>
+    </div>
+    <a href="msg1" target="_blank">
         <button id="nextButton" class="btn-primary me" style="--d: 12s" onclick="redirectToPage()">
             Next
             <div class="shape"></div>
         </button>
-    </div>
-    
-    <script>
-        // Show the button after a delay of 21 seconds
-        setTimeout(() => {
-            document.getElementById('nextButton').style.display = 'block';
-        }, 12000); // 21 seconds
-        function redirectToPage() {
-            window.location.href = 'msg1/msg1.html';
+    </a>
+</div>
+
+<script>
+    // Check password and reveal messages if correct
+    function checkPassword() {
+        const password = document.getElementById('passwordInput').value;
+        const correctPassword = 'ILYSB'; // Set your desired password here
+        if (password === correctPassword) {
+            document.getElementById('messageContainer').style.display = 'flex';
+            document.querySelector('.password-container').style.display = 'none';
+            setTimeout(() => {
+                document.getElementById('nextButton').style.display = 'block';
+            }, 12000); // 12 seconds for the message sequence
+        } else {
+            alert('Incorrect password. Please try again.');
         }
-    </script>
+    }
+
+    function redirectToPage() {
+        window.location.href = 'msg1/msg1.html';
+    }
+</script>
 </body>
 </html>
